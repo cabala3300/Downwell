@@ -12,24 +12,51 @@ var MapVIew = (function (_super) {
     __extends(MapVIew, _super);
     function MapVIew() {
         var _this = _super.call(this) || this;
-        _this.addEventListener(egret.Event.ENTER_FRAME, _this.onEnterFrameHandler, _this);
+        _this.downCount = 1;
+        _this.start();
+        //关卡提示
+        _this.round = new RoundView();
+        _this.addChild(_this.round);
+        //左墙
         _this.box1 = new Box();
+        _this.box1.y = 1136;
         _this.addChild(_this.box1);
+        //右墙
         _this.box2 = new Box();
-        _this.box2.y = _this.box1.y + _this.box1.height;
+        _this.box2.y = _this.box1.y + _this.box1.height + 50;
         _this.addChild(_this.box2);
         return _this;
     }
+    MapVIew.prototype.start = function () {
+        this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrameHandler, this);
+    };
+    MapVIew.prototype.stop = function () {
+        this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrameHandler, this);
+    };
     MapVIew.prototype.onEnterFrameHandler = function () {
-        this.box1.y -= 10;
-        this.box2.y -= 10;
+        //地图移动速度
+        this.round.y -= MapConfig._downSpeed;
+        this.box1.y -= MapConfig._downSpeed;
+        this.box2.y -= MapConfig._downSpeed;
+        if (this.box1.y < -this.box1.height && this.box2.y < -this.box2.height && this.downCount >= 4) {
+            this.stop();
+        }
+        //地图由两块组成
         if (this.box1.y < -this.box1.height) {
-            this.box1.y = this.box2.y + this.box2.height;
-            this.box1.arrangeBar();
+            ++this.downCount;
+            if (this.downCount >= 4)
+                this.round.y = this.box2.y + this.box2.height;
+            else if (this.downCount < 4)
+                this.box1.y = this.box2.y + this.box2.height + 50;
+            // this.box1.arrangeBar();
         }
         else if (this.box2.y < -this.box2.height) {
-            this.box2.y = this.box1.y + this.box1.height;
-            this.box2.arrangeBar();
+            ++this.downCount;
+            if (this.downCount >= 4)
+                this.round.y = this.box1.y + this.box1.height;
+            else if (this.downCount < 4)
+                this.box2.y = this.box1.y + this.box1.height + 50;
+            // this.box2.arrangeBar();
         }
     };
     return MapVIew;
@@ -39,19 +66,19 @@ var Box = (function (_super) {
     __extends(Box, _super);
     function Box() {
         var _this = _super.call(this) || this;
-        //
+        //添加左右障碍墙
         _this.arrangeGrid();
         //
         _this.barContainer = new egret.DisplayObjectContainer();
         _this.addChild(_this.barContainer);
-        _this.arrangeBar();
         return _this;
+        // this.arrangeBar();
     }
     /**
-     *
+     * 排列左右障碍墙
      */
     Box.prototype.arrangeGrid = function () {
-        for (var i = 0; i < 20; i++) {
+        for (var i = 0; i < 50; i++) {
             var mapGridLeft = new MapGrid();
             mapGridLeft.skin = "grid_left_png";
             mapGridLeft.x = 0;
@@ -65,7 +92,7 @@ var Box = (function (_super) {
         }
     };
     /**
-     *
+     * 排列中间障碍
      */
     Box.prototype.arrangeBar = function () {
         var leftOrRight = Math.random() < 0.5 ? true : false;
@@ -83,14 +110,14 @@ var Box = (function (_super) {
                     this.barContainer.addChild(mapGridCenter);
                 }
                 index++;
-                mapGridCenter.x = leftOrRight == true ? (70 * j + 70) : (70 * j + 640 - (arr[i] + 1) * 70);
-                mapGridCenter.y = (arr.length - 2 - i) * 70;
+                mapGridCenter.x = leftOrRight == true ? (MapConfig._width * j + MapConfig._width) : (MapConfig._width * j + 640 - (arr[i] + 1) * MapConfig._width);
+                mapGridCenter.y = (arr.length - 2 - i) * MapConfig._height;
             }
         }
     };
     Object.defineProperty(Box.prototype, "getArrangerBar", {
         /**
-         *
+         * 随机障碍
          */
         get: function () {
             var arr = new Array();

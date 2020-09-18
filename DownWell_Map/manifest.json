@@ -17,6 +17,7 @@
 		"bin-debug/ThemeAdapter.js",
 		"bin-debug/map/MapConfig.js",
 		"bin-debug/map/MapGrid.js",
-		"bin-debug/map/MapVIew.js"
+		"bin-debug/map/MapVIew.js",
+		"bin-debug/map/RoundView.js"
 	]
 }
