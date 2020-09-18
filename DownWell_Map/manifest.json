@@ -15,6 +15,7 @@
 		"bin-debug/Main.js",
 		"bin-debug/Platform.js",
 		"bin-debug/ThemeAdapter.js",
+		"bin-debug/map/MapConfig.js",
 		"bin-debug/map/MapGrid.js",
 		"bin-debug/map/MapVIew.js"
 	]

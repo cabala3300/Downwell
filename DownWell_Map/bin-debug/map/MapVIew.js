@@ -55,12 +55,12 @@ var Box = (function (_super) {
             var mapGridLeft = new MapGrid();
             mapGridLeft.skin = "grid_left_png";
             mapGridLeft.x = 0;
-            mapGridLeft.y = i * 70;
+            mapGridLeft.y = i * MapConfig._height;
             this.addChild(mapGridLeft);
             var mapGridRight = new MapGrid();
             mapGridRight.skin = "grid_right_png";
-            mapGridRight.x = 640 - 70;
-            mapGridRight.y = i * 70;
+            mapGridRight.x = 640 - MapConfig._width;
+            mapGridRight.y = i * MapConfig._height;
             this.addChild(mapGridRight);
         }
     };
