@@ -41,27 +41,34 @@ class MapVIew extends egret.DisplayObjectContainer{
 		this.box1.y -= MapConfig._downSpeed;
 		this.box2.y -= MapConfig._downSpeed;
 
+		//结束停止
 		if(this.box1.y < -this.box1.height && this.box2.y < -this.box2.height && this.downCount >= 4)
 		{
 			this.stop();
 		}
 
+		//当前关卡阶段数
+		let count = MapConfig.round_1_down_cout;
 		//地图由两块组成
 		if(this.box1.y < -this.box1.height)
 		{
 			++ this.downCount;
-			if(this.downCount >= 4)
+			//每关结束显示关卡图
+			if(this.downCount >= count)
 				 this.round.y = this.box2.y + this.box2.height;
-			else if(this.downCount < 4)	
+			//重新排列地图循环
+			else if(this.downCount < count)	
 				this.box1.y = this.box2.y + this.box2.height + 50;
 			// this.box1.arrangeBar();
 		} 
 		else if(this.box2.y < -this.box2.height)
 		{
 			++ this.downCount;
-			if(this.downCount >= 4)
+			//每关结束显示关卡图
+			if(this.downCount >= count)
 				 this.round.y = this.box1.y + this.box1.height;
-			else if(this.downCount < 4)				
+			///重新排列地图循环
+			else if(this.downCount < count)				
 				this.box2.y = this.box1.y + this.box1.height + 50;
 			// this.box2.arrangeBar();
 		}
@@ -69,58 +76,26 @@ class MapVIew extends egret.DisplayObjectContainer{
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class Box extends egret.DisplayObjectContainer{
 
-	private barContainer;
+	private barContainer_l;
+	private barContainer_r;
 	public constructor() {
 		super();
 		//添加左右障碍墙
 		this.arrangeGrid();
-		//
-		this.barContainer = new egret.DisplayObjectContainer();
-		this.addChild(this.barContainer);
-		// this.arrangeBar();
+		//障碍容器
+		this.barContainer_l = new egret.DisplayObjectContainer();
+		this.addChild(this.barContainer_l);
+
+		this.barContainer_r = new egret.DisplayObjectContainer();
+		this.addChild(this.barContainer_r);
+		this.arrangeBar();
 	}
 
 	/**
 	 * 排列左右障碍墙
+	 * 50为一阶段，每关卡由若干个关卡组成
 	 */
 	private arrangeGrid():void
 	{
@@ -145,53 +120,129 @@ class Box extends egret.DisplayObjectContainer{
 	 */
 	public arrangeBar():void{
 
-		let leftOrRight = Math.random() < 0.5 ? true : false;
+		// let count = MapConfig.round_1_down_cout;
+		let countArr_l = [[2, 1, 5000/10000], [2, 1, 5000/10000], [2, 1, 5000/10000], [2, 1, 5000/10000]];
+		let countArr_r = [[3, 1, 5000/10000], [3, 1, 5000/10000], [3, 1, 5000/10000], [3, 1, 5000/10000]];
 
-		let arr = this.getArrangerBar;
-		let index = 0;
-		for(var i = arr.length - 2; i >= 0 ; i --)
-		{
-			for(var j = 0; j < arr[i]; j ++)
-			{	
-				let mapGridCenter;
-				if(this.barContainer.numChildren > index)
+		for(var i = 0; i < 50; i ++)
+		 {
+			 let j;
+			 let index = 0;
+			 let mapGrid_l;
+			 //刷出阻碍几率
+			 let leftOrRight = Math.random() < 0.5 ? true : false;
+			 if(leftOrRight)
+			 {
+				//左障碍
+				for(j = 0; j < 2; j ++)
 				{
-					mapGridCenter = this.barContainer.getChildAt(index);					
+					if(leftOrRight)
+					{
+						
+						// if(this.barContainer_l.numChildren > index)
+						// {
+						// 	mapGrid_l = this.barContainer_l.getChildAt(index);					
+						// }
+						// else
+						// {
+						mapGrid_l = new MapGrid();
+						mapGrid_l.skin = "bar_png";
+						this.barContainer_l.addChild(mapGrid_l);
+						// }	
+						index ++;
+						mapGrid_l.x = j * MapConfig._width;
+						mapGrid_l.y = i * MapConfig._height;
+					}				 
 				}
-				else
+			 }
+			 
+			 index = 0
+			//刷出阻碍几率
+			 leftOrRight = Math.random() < 0.5 ? true : false;
+			 //右障碍
+			 for(j = 0; j < 3; j ++)
+			 {
+				if(leftOrRight)
 				{
-					mapGridCenter = new MapGrid();
-					mapGridCenter.skin = "grid_center_png";
-					this.barContainer.addChild(mapGridCenter);
+					
+					// if(this.barContainer_l.numChildren > index)
+					// {
+					// 	mapGrid_l = this.barContainer_l.getChildAt(index);					
+					// }
+					// else
+					// {
+					mapGrid_l = new MapGrid();
+					mapGrid_l.skin = "bar_png";
+					this.barContainer_l.addChild(mapGrid_l);
+					// }	
+					index ++;
+					mapGrid_l.x = (19 -j) * MapConfig._width;
+					mapGrid_l.y = i * MapConfig._height;
 				}	
-				index ++;					
-				mapGridCenter.x = leftOrRight == true ? (MapConfig._width * j + MapConfig._width) : (MapConfig._width * j + 640 - (arr[i] + 1) * MapConfig._width);
-				mapGridCenter.y = (arr.length - 2 - i) * MapConfig._height;
+			 }			 
+		 }
+
+		// //左障碍
+		// for(var i = 0; i < count; i ++)
+		// {
+		// 	var j = 0;
+		// 	var left = countArr_l[i];
+		// 	var right = countArr_r[i];
+		// 	for(var j = 0; j < count; j ++)
+		// 	{
+
+		// 	}
+		// }
+
+		//右障碍
+
+		// let leftOrRight = Math.random() < 0.5 ? true : false;
+
+		// let arr = this.getArrangerBar;
+		// let index = 0;
+		// for(var i = arr.length - 2; i >= 0 ; i --)
+		// {
+		// 	for(var j = 0; j < arr[i]; j ++)
+		// 	{	
+		// 		let mapGridCenter;
+		// 		if(this.barContainer.numChildren > index)
+		// 		{
+		// 			mapGridCenter = this.barContainer.getChildAt(index);					
+		// 		}
+		// 		else
+		// 		{
+		// 			mapGridCenter = new MapGrid();
+		// 			mapGridCenter.skin = "bar_png";
+		// 			this.barContainer.addChild(mapGridCenter);
+		// 		}	
+		// 		index ++;					
+		// 		mapGridCenter.x = leftOrRight == true ? (MapConfig._width * j + MapConfig._width) : (MapConfig._width * j + 640 - (arr[i] + 1) * MapConfig._width);
+		// 		mapGridCenter.y = (arr.length - 2 - i) * MapConfig._height;
 				
-			}
-		}
+		// 	}
+		// }
 	}
 
-	/**
-	 * 随机障碍
-	 */
-	private get getArrangerBar():Array<number>
-	{
-		let arr = new Array<number>();		
-		let totalCont = 0;
-		let verticalCount = Math.floor(Math.random() * 4) + 1;
-		let lastCount = 5;
-		for(var i = 0; i < verticalCount; i ++)
-		{
-			let horizontalCount = Math.floor(Math.random() * lastCount) + 1;
-			lastCount = horizontalCount;
-			arr.push(horizontalCount);
-			totalCont += horizontalCount;
-			if(i == verticalCount - 1) arr.push(totalCont);
-		}
-		console.log(arr);
-		return arr;
-	}
+	// /**
+	//  * 随机障碍
+	//  */
+	// private get getArrangerBar():Array<number>
+	// {
+	// 	let arr = new Array<number>();		
+	// 	let totalCont = 0;
+	// 	let verticalCount = Math.floor(Math.random() * 4) + 1;
+	// 	let lastCount = 5;
+	// 	for(var i = 0; i < verticalCount; i ++)
+	// 	{
+	// 		let horizontalCount = Math.floor(Math.random() * lastCount) + 1;
+	// 		lastCount = horizontalCount;
+	// 		arr.push(horizontalCount);
+	// 		totalCont += horizontalCount;
+	// 		if(i == verticalCount - 1) arr.push(totalCont);
+	// 	}
+	// 	console.log(arr);
+	// 	return arr;
+	// }
 }
 
 

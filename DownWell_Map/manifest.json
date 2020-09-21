@@ -6,6 +6,7 @@
 		"libs/modules/assetsmanager/assetsmanager.js",
 		"libs/modules/tween/tween.js",
 		"libs/modules/promise/promise.js",
+		"libs/modules/game/game.js",
 		"libs/WXCloudApi/WXCloudApi.js",
 		"libs/egretmgobe/egretmgobe.js"
 	],
@@ -18,6 +19,7 @@
 		"bin-debug/map/MapConfig.js",
 		"bin-debug/map/MapGrid.js",
 		"bin-debug/map/MapVIew.js",
-		"bin-debug/map/RoundView.js"
+		"bin-debug/map/RoundView.js",
+		"bin-debug/Player/Player.js"
 	]
 }

@@ -1,6 +1,6 @@
 {
-  "engineVersion": "5.2.33",
-  "compilerVersion": "5.2.33",
+  "engineVersion": "5.3.9",
+  "compilerVersion": "5.3.9",
   "template": {},
   "target": {
     "current": "web"
@@ -22,6 +22,9 @@
       "name": "promise"
     },
     {
+      "name": "game"
+    },
+    {
       "name": "WXCloudApi",
       "path": "./libs/WXCloudApi"
     },
@@ -29,5 +32,8 @@
       "name": "egretmgobe",
       "path": "./libs/egretmgobe"
     }
-  ]
+  ],
+  "vivo": {
+    "usePlugin": true
+  }
 }

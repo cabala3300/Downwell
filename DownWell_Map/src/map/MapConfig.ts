@@ -4,7 +4,7 @@ class MapConfig {
 	public static _width = 32;
 	public static _height = 32;
 
-	public static _downSpeed = 30;
+	public static _downSpeed = 10;
 
 	//第一关左右 [纵数, 阻挡类型, 万分比]
 	public static round_1_down_cout = 4;

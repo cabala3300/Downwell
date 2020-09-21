@@ -165,8 +165,11 @@ class Main extends eui.UILayer {
      */
     private runMap():void
     {
-        let mapView = new MapVIew();
+        let mapView:MapVIew = new MapVIew();
         this.addChild(mapView);
+
+        let player:Player = new Player();
+        this.addChild(player);
     }
 
     /**

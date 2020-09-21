@@ -6,7 +6,7 @@ var MapConfig = (function () {
     }
     MapConfig._width = 32;
     MapConfig._height = 32;
-    MapConfig._downSpeed = 30;
+    MapConfig._downSpeed = 10;
     //第一关左右 [纵数, 阻挡类型, 万分比]
     MapConfig.round_1_down_cout = 4;
     MapConfig.round_1_l_1 = [2, 1, 5000 / 10000];

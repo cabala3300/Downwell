@@ -224,6 +224,8 @@ var Main = (function (_super) {
     Main.prototype.runMap = function () {
         var mapView = new MapVIew();
         this.addChild(mapView);
+        var player = new Player();
+        this.addChild(player);
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。
