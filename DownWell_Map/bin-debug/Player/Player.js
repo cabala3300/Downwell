@@ -14,6 +14,15 @@ var Player = (function (_super) {
         return _super.call(this) || this;
         // this.aDdEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
     }
+    Object.defineProperty(Player, "instance", {
+        get: function () {
+            if (!this._instance)
+                this._instance = new Player();
+            return this._instance;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Player.prototype.onAddToStage = function () {
         this._mcData = RES.getRes("player_json");
         this._mcTexture = RES.getRes("player_png");
@@ -31,8 +40,6 @@ var Player = (function (_super) {
         this.role = new egret.MovieClip(this.mcDataFactory.generateMovieClipData(direction));
         this.addChild(this.role);
         this.role.gotoAndPlay(1, 50);
-        this.role.x = 270;
-        this.role.y = 370;
         this.role.addEventListener(egret.Event.COMPLETE, function (e) {
             egret.log("play over!");
         }, this);

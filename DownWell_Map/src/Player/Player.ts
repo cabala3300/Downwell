@@ -11,6 +11,14 @@ class Player extends egret.DisplayObjectContainer{
         // this.aDdEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
 	}
 
+    private static _instance:Player;
+    public static get instance():Player
+    {
+        if(!this._instance)
+            this._instance = new Player();
+        return this._instance;
+    }
+
     public onAddToStage():void
 	{
         this._mcData = RES.getRes("player_json");
@@ -24,7 +32,7 @@ class Player extends egret.DisplayObjectContainer{
     {
         if(this.lastDirection == direction) return;
         this.lastDirection = direction;
-        
+
         if(this.role)
         {
             this.role.parent.removeChild(this.role);
@@ -33,9 +41,7 @@ class Player extends egret.DisplayObjectContainer{
         
         this.role = new egret.MovieClip(this.mcDataFactory.generateMovieClipData(direction));
         this.addChild(this.role);
-        this.role.gotoAndPlay(1, 50);
-        this.role.x = 270;
-        this.role.y = 370;
+        this.role.gotoAndPlay(1, 50);        
         this.role.addEventListener(egret.Event.COMPLETE, function (e:egret.Event):void {
             egret.log("play over!")
         }, this);
