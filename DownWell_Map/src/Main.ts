@@ -157,19 +157,16 @@ class Main extends eui.UILayer {
         // this.addChild(button);
         // button.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onButtonClick, this);
 
-        this.runMap();
+        this.run();
     }
     
     /**
-     * 运行地图
+     * 运行主程序入口
      */
-    private runMap():void
+    private run():void
     {
-        let mapView:MapVIew = new MapVIew();
-        this.addChild(mapView);
-
-        let player:Player = new Player();
-        this.addChild(player);
+        //主程序处理器
+        new MainHandler(this);
     }
 
     /**

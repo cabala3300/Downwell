@@ -1,4 +1,4 @@
-class MapVIew extends egret.DisplayObjectContainer{
+class MapView extends egret.DisplayObjectContainer{
 	
 	private round;
 	private box1;
@@ -6,8 +6,8 @@ class MapVIew extends egret.DisplayObjectContainer{
 	private downCount = 1;
 	public constructor() {
 		super();
-
-		this.start();
+		
+		this.run = true;
 
 		//关卡提示
 		this.round = new RoundView();
@@ -23,18 +23,8 @@ class MapVIew extends egret.DisplayObjectContainer{
 		this.box2.y = this.box1.y + this.box1.height + 50;
 		this.addChild(this.box2);
 	}
-
-	private start():void
-	{
-		this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrameHandler, this)
-	}
-
-	private stop():void
-	{
-		this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrameHandler, this)
-	}	
 	
-	private onEnterFrameHandler():void
+	public onEnterFrameHandler():void
 	{
 		//地图移动速度
 		this.round.y -= MapConfig._downSpeed;
@@ -44,7 +34,7 @@ class MapVIew extends egret.DisplayObjectContainer{
 		//结束停止
 		if(this.box1.y < -this.box1.height && this.box2.y < -this.box2.height && this.downCount >= 4)
 		{
-			this.stop();
+			this.run = false;
 		}
 
 		//当前关卡阶段数
@@ -73,6 +63,16 @@ class MapVIew extends egret.DisplayObjectContainer{
 			// this.box2.arrangeBar();
 		}
 	}	
+
+	private _run: boolean;
+	public get run() {
+        return this._run;
+    }
+ 
+    public set run(value : boolean) {
+        this._run = value;
+    }
+
 }
 
 

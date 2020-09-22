@@ -216,16 +216,14 @@ var Main = (function (_super) {
         // button.verticalCenter = 0;
         // this.addChild(button);
         // button.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onButtonClick, this);
-        this.runMap();
+        this.run();
     };
     /**
-     * 运行地图
+     * 运行主程序入口
      */
-    Main.prototype.runMap = function () {
-        var mapView = new MapVIew();
-        this.addChild(mapView);
-        var player = new Player();
-        this.addChild(player);
+    Main.prototype.run = function () {
+        //主程序处理器
+        new MainHandler(this);
     };
     /**
      * 根据name关键字创建一个Bitmap对象。name属性请参考resources/resource.json配置文件的内容。

@@ -8,12 +8,12 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
-var MapVIew = (function (_super) {
-    __extends(MapVIew, _super);
-    function MapVIew() {
+var MapView = (function (_super) {
+    __extends(MapView, _super);
+    function MapView() {
         var _this = _super.call(this) || this;
         _this.downCount = 1;
-        _this.start();
+        _this.run = true;
         //关卡提示
         _this.round = new RoundView();
         _this.addChild(_this.round);
@@ -27,20 +27,14 @@ var MapVIew = (function (_super) {
         _this.addChild(_this.box2);
         return _this;
     }
-    MapVIew.prototype.start = function () {
-        this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrameHandler, this);
-    };
-    MapVIew.prototype.stop = function () {
-        this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrameHandler, this);
-    };
-    MapVIew.prototype.onEnterFrameHandler = function () {
+    MapView.prototype.onEnterFrameHandler = function () {
         //地图移动速度
         this.round.y -= MapConfig._downSpeed;
         this.box1.y -= MapConfig._downSpeed;
         this.box2.y -= MapConfig._downSpeed;
         //结束停止
         if (this.box1.y < -this.box1.height && this.box2.y < -this.box2.height && this.downCount >= 4) {
-            this.stop();
+            this.run = false;
         }
         //当前关卡阶段数
         var count = MapConfig.round_1_down_cout;
@@ -64,9 +58,19 @@ var MapVIew = (function (_super) {
             // this.box2.arrangeBar();
         }
     };
-    return MapVIew;
+    Object.defineProperty(MapView.prototype, "run", {
+        get: function () {
+            return this._run;
+        },
+        set: function (value) {
+            this._run = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return MapView;
 }(egret.DisplayObjectContainer));
-__reflect(MapVIew.prototype, "MapVIew");
+__reflect(MapView.prototype, "MapView");
 var Box = (function (_super) {
     __extends(Box, _super);
     function Box() {
@@ -192,4 +196,4 @@ var Box = (function (_super) {
     return Box;
 }(egret.DisplayObjectContainer));
 __reflect(Box.prototype, "Box");
-//# sourceMappingURL=MapVIew.js.map
+//# sourceMappingURL=MapView.js.map
