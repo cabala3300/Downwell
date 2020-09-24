@@ -196,4 +196,4 @@ var Box = (function (_super) {
     return Box;
 }(egret.DisplayObjectContainer));
 __reflect(Box.prototype, "Box");
-//# sourceMappingURL=MapView.js.map
+//# sourceMappingURL=MapVIew.js.map

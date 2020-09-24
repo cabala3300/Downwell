@@ -68,14 +68,14 @@ class MainHandler {
 		}
 
 		egret.Tween.get( this.player )
-		.to( {x : _x, y : _y - 50}, 200 )
-		.wait( 200 )
-		.to( {x :  _x, y : _y}, 50 );
+		.to( {x : _x, y : _y - 100}, 200 )
+		.wait( 0 )
+		.to( {x :  _x, y : _y}, 100 );
 		
 		function onCom(){
 			Player.instance.run("center");
 		}
-		setTimeout(onCom, 250);
+		setTimeout(onCom, 300);
 
     }
 
